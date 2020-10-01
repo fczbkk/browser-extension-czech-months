@@ -1,0 +1,12 @@
+{
+  "manifest_version": 2,
+  "version": "1.0.0",
+  "name": "Czech Months translation",
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["translate-czech-months.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
