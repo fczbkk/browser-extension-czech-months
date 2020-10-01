@@ -1,28 +1,99 @@
 const IS_HANDLED = '__czech_months_is_handled'
 
-// TODO config object
 const months = {
-  'january': ['leden', 'lednový', 'lednu'],
-  'february': ['únor', 'únorový', 'únoru'],
-  'march': ['březen'],
-  'april': ['duben'],
-  'may': ['květen'],
-  'june': ['červen'],
-  'july': ['červenec'],
-  'august': ['srpen'],
-  'september': ['září'],
-  'october': ['říjen'],
-  'november': ['listopad'],
-  'december': ['prosinec']
+  'january': ['leden', 'ledny',
+    'ledna', 'lednů',
+    'lednu', 'lednům',
+    'leden', 'ledny',
+    'ledne', 'ledny',
+    'lednu', 'lednech',
+    'lednem', 'ledny'],
+  'february': ['únor', 'únory',
+    'února', 'únorů',
+    'únoru', 'únorům',
+    'únor', 'únory',
+    'únore', 'únory',
+    'únoru', 'únorech',
+    'únorem', 'únory'],
+  'march': ['březen', 'březny',
+    'března', 'březnů',
+    'březnu', 'březnům',
+    'březen', 'březny',
+    'březne', 'březny',
+    'březnu', 'březnech',
+    'březnem', 'březny'],
+  'april': ['duben', 'dubny',
+    'dubna', 'dubnů',
+    'dubnu', 'dubnům',
+    'duben', 'dubny',
+    'dubne', 'dubny',
+    'dubnu', 'dubnech',
+    'dubnem', 'dubny'],
+  'may': ['květen', 'květny',
+    'května', 'květnů',
+    'květnu', 'květnům',
+    'květen', 'květny',
+    'květne', 'květny',
+    'květnu', 'květnech',
+    'květnem', 'květny'],
+  'june': ['červen', 'červny',
+    'června', 'červnů',
+    'červnu', 'červnům',
+    'červen', 'červny',
+    'červne', 'červny',
+    'červnu', 'červnech',
+    'červnem', 'červny'],
+  'july': ['červenec', 'července',
+    'července', 'červenců',
+    'červenci', 'červencům',
+    'červenec', 'července',
+    'červenci', 'července',
+    'červenci', 'červencích',
+    'červencem', 'červenci'],
+  'august': ['srpen', 'srpny',
+    'srpna', 'srpnů',
+    'srpnu', 'srpnům',
+    'srpen', 'srpny',
+    'srpne', 'srpny',
+    'srpnu', 'srpnech',
+    'srpnem', 'srpny'],
+  'september': ['září', 'září',
+    'září', 'září',
+    'září', 'zářím',
+    'září', 'září',
+    'září', 'září',
+    'září', 'zářích',
+    'zářím', 'zářími'],
+  'october': ['říjen', 'říjny',
+    'října', 'říjnů',
+    'říjnu', 'říjnům',
+    'říjen', 'říjny',
+    'říjne', 'říjny',
+    'říjnu', 'říjnech',
+    'říjnem', 'říjny'],
+  'november': ['listopad', 'listopady',
+    'listopadu', 'listopadů',
+    'listopadu', 'listopadům',
+    'listopad', 'listopady',
+    'listopade', 'listopady',
+    'listopadu', 'listopadech',
+    'listopadem', 'listopady'],
+  'december': ['prosinec', 'prosince',
+    'prosince', 'prosinců',
+    'prosinci', 'prosincům',
+    'prosinec', 'prosince',
+    'prosinci', 'prosince',
+    'prosinci', 'prosincích',
+    'prosincem', 'prosinci']
 }
 
 const monthMatchers = Object.values(months)
-  .map((monthVariants) => `(${ monthVariants.join('|') })`)
+  .map((monthVariants) => `(${monthVariants.join('|')})`)
   .join('|')
 
 const re = new RegExp(`(^|\\P{L})(${ monthMatchers })($|\\P{L})`, 'ugi')
 
-function translateMonths (content = '') {
+function translateMonths(content = '') {
   return content.replaceAll(re, function (...args) {
     const {
       1: prefix,
@@ -35,12 +106,12 @@ function translateMonths (content = '') {
   })
 }
 
-function updateNodes (rootNode = document.body) {
+function updateNodes(rootNode = document.body) {
   const walker = document.createTreeWalker(
     rootNode,
     NodeFilter.SHOW_TEXT,
     {
-      acceptNode: function(node) {
+      acceptNode: function (node) {
         if (re.test(node.nodeValue)) {
           return NodeFilter.FILTER_ACCEPT
         }
